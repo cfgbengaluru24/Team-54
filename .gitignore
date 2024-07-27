@@ -13,7 +13,7 @@ server/node_modules
 dist
 dist-ssr
 *.local
-
+client/src/speechToText.js
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

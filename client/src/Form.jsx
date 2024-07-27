@@ -1,15 +1,13 @@
-import react from "react";
-import "./App.css";
+import React from "react";
 import axios from "axios";
 import Container from "@mui/material/Container";
 import FormControl from "@mui/material/FormControl";
-import { TextField } from "@mui/material";
+import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { useForm } from "react-hook-form";
-// import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import "./App.css";
 
-
-function App() {
+function Form() {
 	/*const [data, setData] = react.useState(null);
 
 	react.useEffect(() => {
@@ -20,7 +18,7 @@ function App() {
 	const { register, handleSubmit } = useForm();
 
 	const onsub = (data) => {
-		axios.post("http://localhost:3001/api", data)
+		axios.post("http://localhost:3001/edu/data", data)
 			.then(response => {
 				console.log(response.data);
 			})
@@ -29,7 +27,7 @@ function App() {
 			});
 	};
 
-	const handleSpeak = (text) => {
+    const handleSpeak = (text) => {
         const utterance = new SpeechSynthesisUtterance(text);
         window.speechSynthesis.speak(utterance);
     };
@@ -71,7 +69,7 @@ function App() {
 								justifyContent: "space-evenly",
 							}}
 						>
-							<TextField
+							<TextField  onClick={() => handleSpeak('Child id')}
 								{...register("child-id")}
 								style={{ marginTop: "20px", marginRight: "10px" }}
 								id="child-id"
@@ -80,6 +78,7 @@ function App() {
 								variant="outlined"
 							/>
 							<TextField
+							 	onClick={() => handleSpeak('School')}
 								{...register("school")}
 								style={{ marginTop: "20px" }}
 								id="school"
@@ -89,6 +88,7 @@ function App() {
 							/>
 						</div>
 						<TextField
+							onClick={() => handleSpeak('Marks')}
 							{...register("marks")}
 							style={{ marginTop: "20px" }}
 							id="marks"
@@ -97,6 +97,7 @@ function App() {
 							variant="outlined"
 						/>
 						<TextField
+							onClick={() => handleSpeak('Blood Group')}
 							{...register("bg")}
 							style={{ marginTop: "20px" }}
 							name="bg"
@@ -127,4 +128,4 @@ function App() {
 	);
 }
 
-export default App;
+export default Form;
