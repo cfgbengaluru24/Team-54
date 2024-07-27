@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 // import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 
-function App() {
+function Form() {
 	/*const [data, setData] = react.useState(null);
 
 	react.useEffect(() => {
@@ -71,7 +71,7 @@ function App() {
 								justifyContent: "space-evenly",
 							}}
 						>
-							<TextField
+							<TextField  onClick={() => handleSpeak('Child id')}
 								{...register("child-id")}
 								style={{ marginTop: "20px", marginRight: "10px" }}
 								id="child-id"
@@ -80,6 +80,7 @@ function App() {
 								variant="outlined"
 							/>
 							<TextField
+							 	onClick={() => handleSpeak('School')}
 								{...register("school")}
 								style={{ marginTop: "20px" }}
 								id="school"
@@ -89,6 +90,7 @@ function App() {
 							/>
 						</div>
 						<TextField
+							onClick={() => handleSpeak('Marks')}
 							{...register("marks")}
 							style={{ marginTop: "20px" }}
 							id="marks"
@@ -97,6 +99,7 @@ function App() {
 							variant="outlined"
 						/>
 						<TextField
+							onClick={() => handleSpeak('Blood Group')}
 							{...register("bg")}
 							style={{ marginTop: "20px" }}
 							name="bg"
@@ -127,4 +130,4 @@ function App() {
 	);
 }
 
-export default App;
+export default Form;
