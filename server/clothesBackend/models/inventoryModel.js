@@ -1,11 +1,9 @@
 const mongoose = require('mongoose');
 
-const inventorySchema = new mongoose.Schema({
-  category: { type: String, required: true, unique: true },
-  quantity: { type: Number, default: 0 },
-  capacity: { type: Number, default: 10 },
+const InventorySchema = new mongoose.Schema({
+    category: { type: String, required: true },
+    quantity: { type: Number, required: true },
+    totalCapacity: { type: Number, default: 10 } // Total capacity initialized to 10
 });
 
-const Inventory = mongoose.model('Inventory', inventorySchema);
-
-module.exports = Inventory;
+module.exports = mongoose.model('Inventory', InventorySchema);
