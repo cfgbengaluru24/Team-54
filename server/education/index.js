@@ -1,10 +1,12 @@
+const { urlencoded } = require("body-parser");
 const express = require("express");
-const mongoose = require("mongoose");
+const mongoose = require("mongoose"); // Import mongoose here only once
 
 const app = express();
 const Port = process.env.PORT || 3000;
 
 app.use(express.json());
+app.use(urlencoded());
 
 mongoose.connect("mongodb://localhost:27017/ngo_education", {
     useNewUrlParser: true,
@@ -13,6 +15,7 @@ mongoose.connect("mongodb://localhost:27017/ngo_education", {
 .then(() => console.log("MongoDB connected"))
 .catch(err => console.error("MongoDB connection error:", err));
 
+// EducationalReport model definition
 const educationalReportSchema = new mongoose.Schema({
     studentId: String,
     name: String,
@@ -23,20 +26,40 @@ const educationalReportSchema = new mongoose.Schema({
 const EducationalReport = mongoose.model("EducationalReport", educationalReportSchema);
 
 const updateData = async (id, data) => {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        console.error("Invalid ID format");
+        throw new Error("Invalid ID format");
+    }
+
     try {
         const report = await EducationalReport.findByIdAndUpdate(id, data, { new: true });
+        if (!report) {
+            console.log("Report not found");
+            throw new Error("Report not found");
+        }
         console.log("Updated Report:", report);
+        return report;
     } catch (err) {
-        console.error("Error updating report:", err.message);
+        throw new Error("Error updating report: " + err.message);
     }
 };
 
 const getData = async (id) => {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        console.error("Invalid ID format");
+        throw new Error("Invalid ID format");
+    }
+
     try {
         const report = await EducationalReport.findById(id);
+        if (!report) {
+            console.log("Report not found");
+            throw new Error("Report not found");
+        }
         console.log("Retrieved Report:", report);
+        return report;
     } catch (err) {
-        console.error("Error retrieving report:", err.message);
+        throw new Error("Error retrieving report: " + err.message);
     }
 };
 
@@ -46,7 +69,7 @@ const postData = async (form) => {
         await newReport.save();
         console.log("New Report Added:", newReport);
     } catch (err) {
-        console.error("Error saving report:", err.message);
+        throw new Error("Error saving report: " + err.message);
     }
 };
 
