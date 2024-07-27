@@ -1,33 +1,49 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+// const cors = require('cors');
+// app.use(cors());
+
 const DataFetchingComponent = () => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
-  const id = '66a571e42fcb29f036cb9684'; // Replace with the actual ID you want to fetch
+  const [id, setId] = useState('');
 
-  useEffect(() => {
-    axios.get(`/edu/data/${id}`)
-      .then(response => setData(response.data))
+  const fetchData = () => {
+    setLoading(true);
+    setError(null);
+
+    axios.get(`http://localhost:3000/edu/data/${id}`)
+      .then(response => {
+        console.log(response.data);
+        setData(response.data);
+        setLoading(false);
+      })
       .catch(error => {
-        console.error('Error fetching data:', error);
-        setError(error.message);
+        console.error(error);
+        setError(error);
+        setLoading(false);
       });
   }, [id]);
 
   return (
     <div>
-      <h1>Fetched Data</h1>
-      {error ? (
-        <p>Error: {error}</p>
-      ) : (
-        data && (
-          <div>
-            <h2>{data.title}</h2>
-            <p>{data.description}</p>
-            {/* Render other data fields as needed */}
-          </div>
-        )
+      <h3>Fetch Data by ID</h3>
+      <input
+        type="text"
+        value={id}
+        onChange={(e) => setId(e.target.value)}
+        placeholder="Enter ID"
+      />
+      <button onClick={fetchData}>Fetch Data</button>
+
+      {loading && <p>Loading...</p>}
+      {error && <p>Error: {error.message}</p>}
+      {data && (
+        <div>
+          <h2>Data for ID: {id}</h2>
+          <pre>{JSON.stringify(data, null, 2)}</pre>
+        </div>
       )}
     </div>
   );

@@ -6,6 +6,9 @@ const connectDB = require("./config/db");
 
 const app = express();
 const Port = process.env.PORT || 3000;
+const cors = require("cors");
+app.use(cors());
+
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
