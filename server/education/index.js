@@ -12,6 +12,10 @@ const getData=(id)=>{
     console.log(id);
 }
 
+const Post=(form)=>{
+    console.log(form.name);
+}
+
 app = express();
 app.use(express.json());
 
@@ -30,16 +34,18 @@ app.put("/edu/data/:id", (req, res) => {
 app.get("/edu/data/:id",(req,res)=>{
     const id=req.params.id;
     getData(id)
-    // .then((tutorial) => {
-    //     if (tutorial) {
-    //       res.json(tutorial);
-    //     } else {
-    //       res.status(404).send("Tutorial not found.");
-    //     }
+    // .then(() => {
+    //     res.status(201).send("Student got")
     //   })
     //   .catch((err) => {
     //     res.status(500).send(err.message);
     //   });
+})
+
+app.post("/edu/data/:id", (req, res) =>{
+    const form=req.body
+    Post(form)
+    res.status(201).send("Student got")
 })
 
 app.listen(Port, () => {
