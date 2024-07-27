@@ -19,27 +19,27 @@ app.put("/edu/data/:id", (req, res) => {
     const id=req.params.id;
 	const data = req.body;
 	Update(id,data)
-		.then(() => {
-			res.status(201).send("User Created");
-		})
-		.catch((err) => {
-			res.status(500).send(err.message);
-		});
+		// .then(() => {
+		// 	res.status(201).send("User Created");
+		// })
+		// .catch((err) => {
+		// 	res.status(500).send(err.message);
+		// });
 });
 
 app.get("/edu/data/:id",(req,res)=>{
     const id=req.params.id;
     getData(id)
-    .then((tutorial) => {
-        if (tutorial) {
-          res.json(tutorial);
-        } else {
-          res.status(404).send("Tutorial not found.");
-        }
-      })
-      .catch((err) => {
-        res.status(500).send(err.message);
-      });
+    // .then((tutorial) => {
+    //     if (tutorial) {
+    //       res.json(tutorial);
+    //     } else {
+    //       res.status(404).send("Tutorial not found.");
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     res.status(500).send(err.message);
+    //   });
 })
 
 app.listen(Port, () => {
