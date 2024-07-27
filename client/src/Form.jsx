@@ -20,7 +20,7 @@ function App() {
 	const { register, handleSubmit } = useForm();
 
 	const onsub = (data) => {
-		axios.post("http://localhost:3001/api", data)
+		axios.post("http://localhost:3001/edu/data", data)
 			.then(response => {
 				console.log(response.data);
 			})
