@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 
 const connectDB = async () => {
   try {
-    await mongoose.connect('mongodb://localhost:27017/ngo', {
+    // console.log(MONGO_EDU_URI);
+    await mongoose.connect(process.env.MONGO_EDU_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true
     });

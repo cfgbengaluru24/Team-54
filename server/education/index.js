@@ -1,33 +1,24 @@
-const { urlencoded } = require("body-parser");
 const express = require("express");
-const mongoose = require("mongoose"); // Import mongoose here only once
+const mongoose = require("mongoose"); // Import mongoose here
 require('dotenv').config();
 const bodyParser = require('body-parser');
+const connectDB = require("./config/db");
+
 const app = express();
 const Port = process.env.PORT || 3000;
+
+// Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
-app.use(express.json());
-app.use(urlencoded());
-if (process.env.MONGO_EDU_URI) {
-    console.error('MongoDB URI is not set in environment variables');
-    process.exit(1);
-  }
-
-mongoose.connect(process.env.MONGO_EDU_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
-.then(() => console.log("MongoDB connected"))
-.catch(err => console.error("MongoDB connection error:", err));
+connectDB();
 
 // EducationalReport model definition
 const educationalReportSchema = new mongoose.Schema({
-    studentId: String,
-    name: String,
-    report: String,
-    createdAt: { type: Date, default: Date.now }
+  childId: { type: mongoose.Schema.Types.ObjectId, ref: 'Child', required: true },
+  subject: { type: String, required: true },
+  marks: { type: Number, required: true },
+  comments: { type: String },
+  createdAt: { type: Date, default: Date.now }
 });
 
 const EducationalReport = mongoose.model("EducationalReport", educationalReportSchema);
@@ -80,6 +71,7 @@ const postData = async (form) => {
     }
 };
 
+// Routes
 app.put("/edu/data/:id", async (req, res) => {
     const id = req.params.id;
     const data = req.body;
@@ -115,5 +107,6 @@ app.post("/edu/data", async (req, res) => {
 });
 
 app.listen(Port, () => {
+    console.log(process.env.MONGO_DB_URI);
     console.log(`Server running on port ${Port}.`);
 });
