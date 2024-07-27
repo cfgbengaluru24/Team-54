@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Register from './components/Register';
 import Login from './components/Login';
 import Donate from './components/Donate';
-import Cart from './components/Cart'
+import Cart from './components/CartItem'
 
 const App = () => {
     return (
