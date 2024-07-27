@@ -8,13 +8,10 @@ import Login from './components/Login.jsx'
 import Cart from './components/Cart.jsx'
 import Donate from './components/Donate.jsx'
 import Inventory from './components/Inventory.jsx'
+import DataFetchingComponent from './education/DataFetchingComponent.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <Register />
-    <Login />
-    <Donate />
-    <Cart />
-    <Inventory/>
+    <DataFetchingComponent/>
   </React.StrictMode>,
 )
