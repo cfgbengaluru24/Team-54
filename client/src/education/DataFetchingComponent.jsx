@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+// const cors = require('cors');
+// app.use(cors());
+
 const DataFetchingComponent = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -11,12 +14,14 @@ const DataFetchingComponent = () => {
     setLoading(true);
     setError(null);
 
-    axios.get(`https://api.example.com/data/${id}`)
+    axios.get(`http://localhost:3000/edu/data/${id}`)
       .then(response => {
+        console.log(response.data);
         setData(response.data);
         setLoading(false);
       })
       .catch(error => {
+        console.error(error);
         setError(error);
         setLoading(false);
       });
@@ -38,7 +43,7 @@ const DataFetchingComponent = () => {
       {data && (
         <div>
           <h2>Data for ID: {id}</h2>
-          <p>{JSON.stringify(data)}</p>
+          <pre>{JSON.stringify(data, null, 2)}</pre>
         </div>
       )}
     </div>
