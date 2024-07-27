@@ -43,6 +43,7 @@ app.get("/edu/data/:id",(req,res)=>{
 })
 
 app.post("/edu/data/:id", (req, res) =>{
+    const id=req.params.id;
     const form=req.body
     Post(form)
     res.status(201).send("Student got")
