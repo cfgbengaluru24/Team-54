@@ -120,6 +120,13 @@ function Form() {
 							>
 								Submit
 							</Button>
+							<Button
+								type="submit"
+								variant="contained"
+								style={{ marginTop: "10px", width: "40%" }}
+							>
+								Submit
+							</Button>
 						</div>
 					</FormControl>
 				</form>
