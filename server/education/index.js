@@ -1,14 +1,21 @@
 const { urlencoded } = require("body-parser");
 const express = require("express");
 const mongoose = require("mongoose"); // Import mongoose here only once
-
+require('dotenv').config();
+const bodyParser = require('body-parser');
 const app = express();
 const Port = process.env.PORT || 3000;
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 app.use(express.json());
 app.use(urlencoded());
+if (process.env.MONGO_EDU_URI) {
+    console.error('MongoDB URI is not set in environment variables');
+    process.exit(1);
+  }
 
-mongoose.connect("mongodb://localhost:27017/ngo_education", {
+mongoose.connect(process.env.MONGO_EDU_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
