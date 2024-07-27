@@ -1,5 +1,5 @@
 const express = require("express");
-const mongoose = require("mongoose"); // Import mongoose here
+const mongoose = require("mongoose");
 require('dotenv').config();
 const bodyParser = require('body-parser');
 const connectDB = require("./config/db");
@@ -14,11 +14,11 @@ connectDB();
 
 // EducationalReport model definition
 const educationalReportSchema = new mongoose.Schema({
-  childId: { type: mongoose.Schema.Types.ObjectId, ref: 'Child', required: true },
-  subject: { type: String, required: true },
-  marks: { type: Number, required: true },
-  comments: { type: String },
-  createdAt: { type: Date, default: Date.now }
+    childId: { type: mongoose.Schema.Types.ObjectId, ref: 'Child', required: true },
+    subject: { type: String, required: true },
+    marks: { type: Number, required: true },
+    comments: { type: String },
+    createdAt: { type: Date, default: Date.now }
 });
 
 const EducationalReport = mongoose.model("EducationalReport", educationalReportSchema);
@@ -61,16 +61,6 @@ const getData = async (id) => {
     }
 };
 
-const postData = async (form) => {
-    try {
-        const newReport = new EducationalReport(form);
-        await newReport.save();
-        console.log("New Report Added:", newReport);
-    } catch (err) {
-        throw new Error("Error saving report: " + err.message);
-    }
-};
-
 // Routes
 app.put("/edu/data/:id", async (req, res) => {
     const id = req.params.id;
@@ -86,7 +76,6 @@ app.put("/edu/data/:id", async (req, res) => {
 
 app.get("/edu/data/:id", async (req, res) => {
     const id = req.params.id;
-
     try {
         const report = await getData(id);
         res.status(200).json(report);
@@ -99,14 +88,24 @@ app.post("/edu/data", async (req, res) => {
     const form = req.body;
 
     try {
-        await postData(form);
+        // Validate childId and other required fields
+        if (!form.childId || !form.subject || !form.marks) {
+            return res.status(400).send("All required fields must be provided.");
+        }
+
+        // Create a new report
+        const newReport = new EducationalReport(form);
+
+        // Save the report to the database
+        await newReport.save();
+
+        console.log("New Report Added:", newReport);
         res.status(201).send("Report Created");
     } catch (err) {
-        res.status(500).send(err.message);
+        res.status(500).send("Error saving report: " + err.message);
     }
 });
 
 app.listen(Port, () => {
-    console.log(process.env.MONGO_DB_URI);
     console.log(`Server running on port ${Port}.`);
 });
