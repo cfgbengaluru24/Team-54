@@ -21,3 +21,29 @@ exports.initializeInventory = async () => {
     throw new Error('Server error'); // Throw error to be caught by route handler
   }
 };
+
+exports.updateQuantity = async (req, res) => {
+  const { category, quantity } = req.body;
+
+  try {
+    const inventoryItem = await Inventory.findOne({ category });
+
+    if (!inventoryItem) {
+      return res.status(404).json({ message: 'Category not found' });
+    }
+
+    if (quantity > inventoryItem.capacity) {
+      return res.status(400).json({ message: 'Insufficient capacity' });
+    }
+
+    inventoryItem.quantity += quantity;
+    inventoryItem.capacity -= quantity;
+
+    await inventoryItem.save();
+
+    res.status(200).json({ message: 'Quantity updated successfully', item: inventoryItem });
+  } catch (error) {
+    console.error('Error updating quantity:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
+};

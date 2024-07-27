@@ -5,6 +5,7 @@ const Inventory = require('../models/inventoryModel');
 
 
 const router = express.Router();
+const inventoryController = require('../controllers/inventoryController');
 
 router.post('/initialize', async (req, res) => {
   try {
