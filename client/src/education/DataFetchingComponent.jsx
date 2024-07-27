@@ -6,6 +6,7 @@ import axios from 'axios';
 
 const DataFetchingComponent = () => {
   const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [id, setId] = useState('');
 
@@ -24,7 +25,7 @@ const DataFetchingComponent = () => {
         setError(error);
         setLoading(false);
       });
-  }, [id]);
+  };
 
   return (
     <div>
@@ -47,8 +48,6 @@ const DataFetchingComponent = () => {
       )}
     </div>
   );
-
-
 };
 
 export default DataFetchingComponent;
