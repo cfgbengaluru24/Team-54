@@ -1,13 +1,11 @@
-import react from "react";
-import "./App.css";
+import React from "react";
 import axios from "axios";
 import Container from "@mui/material/Container";
 import FormControl from "@mui/material/FormControl";
-import { TextField } from "@mui/material";
+import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { useForm } from "react-hook-form";
-// import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
+import "./App.css";
 
 function Form() {
 	/*const [data, setData] = react.useState(null);
@@ -29,7 +27,7 @@ function Form() {
 			});
 	};
 
-	const handleSpeak = (text) => {
+    const handleSpeak = (text) => {
         const utterance = new SpeechSynthesisUtterance(text);
         window.speechSynthesis.speak(utterance);
     };
