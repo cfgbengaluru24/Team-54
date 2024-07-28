@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-
-// const cors = require('cors');
-// app.use(cors());
+import { Container, TextField, Button, CircularProgress, Typography, Paper, Box } from '@mui/material';
 
 const DataFetchingComponent = () => {
   const [data, setData] = useState(null);
@@ -28,25 +26,46 @@ const DataFetchingComponent = () => {
   };
 
   return (
-    <div>
-      <h3>Fetch Data by ID</h3>
-      <input
-        type="text"
-        value={id}
-        onChange={(e) => setId(e.target.value)}
-        placeholder="Enter ID"
-      />
-      <button onClick={fetchData}>Fetch Data</button>
-
-      {loading && <p>Loading...</p>}
-      {error && <p>Error: {error.message}</p>}
-      {data && (
-        <div>
-          <h2>Data for ID: {id}</h2>
-          <pre>{JSON.stringify(data, null, 2)}</pre>
-        </div>
-      )}
-    </div>
+    <Container maxWidth="sm" style={{ marginTop: '40px' }}>
+      <Paper elevation={3} style={{ padding: '20px' }}>
+        <Typography variant="h4" gutterBottom>
+          Fetch Educational Report
+        </Typography>
+        <Box mb={2}>
+          <TextField
+            label="Child's ID"
+            variant="outlined"
+            fullWidth
+            value={id}
+            onChange={(e) => setId(e.target.value)}
+            style={{ marginBottom: '20px' }}
+          />
+        </Box>
+        <Box mb={2} display="flex" justifyContent="center">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={fetchData}
+            disabled={loading}
+          >
+            {loading ? <CircularProgress size={24} /> : 'Fetch Data'}
+          </Button>
+        </Box>
+        {error && (
+          <Typography color="error" style={{ marginTop: '20px' }}>
+            Error: {error.message}
+          </Typography>
+        )}
+        {data && (
+          <Paper elevation={1} style={{ marginTop: '20px', padding: '10px' }}>
+            <Typography variant="h6">Data for ID: {id}</Typography>
+            <pre style={{ whiteSpace: 'pre-wrap', wordWrap: 'break-word' }}>
+              {JSON.stringify(data, null, 2)}
+            </pre>
+          </Paper>
+        )}
+      </Paper>
+    </Container>
   );
 };
 
