@@ -42,7 +42,7 @@ const DataFetchingComponent = () => {
       {error && <p>Error: {error.message}</p>}
       {data && (
         <div>
-          <h2>Data for ID: {id}</h2>
+          <h2>School Data</h2>
           <pre>{JSON.stringify(data, null, 2)}</pre>
         </div>
       )}
