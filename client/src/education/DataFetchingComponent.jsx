@@ -59,8 +59,8 @@ const DataFetchingComponent = () => {
         {data && (
           <Paper elevation={1} style={{ marginTop: '20px', padding: '10px' }}>
             <Typography variant="h6">Data for ID: {id}</Typography>
-            <pre style={{ whiteSpace: 'pre-wrap', wordWrap: 'break-word' }}>
-              {JSON.stringify(data, null, 2)}
+            <pre style={{ whiteSpace: 'pre-wrap', wordWrap: 'break-word' }}><h3>
+              {JSON.stringify(data, null, 2)}</h3>
             </pre>
           </Paper>
         )}
