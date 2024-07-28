@@ -12,20 +12,20 @@ import SendEmailButton from './components/SendEmailButton.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    {/*<Register />
-    <Login />*/}
     <div style={{
-			display: "flex",
-      flexDirection:"column",
-			alignItems:"center",
-			background: "#CFFCF8",
-			margin: 0,
-      color:'black',
-		  }} >
-    <div><Donation /></div>
-    <div style={{display: "flex",flexDirection:"column",}}><Cart /></div>
-    <div><Inventory/></div>
-    <div><SendEmailButton/></div>
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      background: "#CFFCF8",
+      margin: 0,
+      color: 'black',
+    }}>
+      <Donation />
+      {/*<div style={{ display: "flex", flexDirection: "column" }}>
+        <Cart />
+      </div>
+      <Inventory />
+  <SendEmailButton />*/}
     </div>
   </React.StrictMode>,
 )
