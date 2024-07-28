@@ -1,45 +1,47 @@
 const Donation = require('../models/donationModel');
 const Inventory = require('../models/inventoryModel');
-const { sendRescheduleEmail } = require('../utils/mailer');
 
-exports.createDonation = async (req, res) => {
-    const { category, quantity, email } = req.body;
+exports.addDonation = async (req, res) => {
+  const { category, quantity, email } = req.body;
 
-    try {
-        let inventory = await Inventory.findOne({ category });
+  try {
+    // Find the inventory item
+    const inventoryItem = await Inventory.findOne({ category });
 
-        if (!inventory) {
-            // Create a new inventory entry if it does not exist
-            inventory = new Inventory({ category, quantity: 0, totalCapacity: 10 }); // Initialize with total capacity
-        }
-
-        if (inventory.quantity + quantity > 10) {
-            const rescheduleDate = new Date();
-            rescheduleDate.setDate(rescheduleDate.getDate() + 7); // Reschedule for 7 days later
-            
-            sendRescheduleEmail(email, rescheduleDate.toDateString());
-            return res.status(400).json({ msg: 'Not enough space in inventory. An email has been sent to reschedule your donation.' });
-        }
-
-        // Save the donation
-        const donation = new Donation({ user: req.user.id, category, quantity });
-        await donation.save();
-
-        // Update inventory
-        inventory.quantity += quantity;
-        await inventory.save();
-
-        res.json(donation);
-    } catch (err) {
-        res.status(500).json({ msg: 'Server error' });
+    if (!inventoryItem) {
+      return res.status(404).json({ message: 'Category not found' });
     }
+
+    if (quantity > inventoryItem.capacity) {
+      return res.status(400).json({ message: 'Insufficient capacity' });
+    }
+
+    // Update inventory
+    inventoryItem.quantity += quantity;
+    inventoryItem.capacity -= quantity;
+    await inventoryItem.save();
+
+    // Add donation
+    const newDonation = new Donation({
+      category,
+      quantity,
+      email
+    });
+
+    await newDonation.save();
+    res.status(201).json({ message: 'Donation added successfully', donation: newDonation });
+  } catch (error) {
+    console.error('Error adding donation:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
 };
 
 exports.getDonations = async (req, res) => {
-    try {
-        const donations = await Donation.find({ user: req.user.id });
-        res.json(donations);
-    } catch (err) {
-        res.status(500).json({ msg: 'Server error' });
-    }
+  try {
+    const donations = await Donation.find().sort({ createdAt: -1 });
+    res.status(200).json(donations);
+  } catch (error) {
+    console.error('Error fetching donations:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
 };
