@@ -25,3 +25,4 @@ client/src/speechToText.js
 *.sln
 *.sw?
 .env
+

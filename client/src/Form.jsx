@@ -17,6 +17,9 @@ function Form() {
 function redirectToExternal() {
     window.location.href = 'http://localhost:3000/';
 }
+function alerting(){
+	alert("Successfully submitted");
+}
 
 
 	const { register, handleSubmit } = useForm();
@@ -48,7 +51,7 @@ function redirectToExternal() {
 			display: "flex",
 			alignItems: "center",
 			justifyContent: "center",
-			background: "#CFFCF8",
+			background: "white",
 			height: "100vh",
 			margin: 0,
 		  }}
@@ -122,6 +125,7 @@ function redirectToExternal() {
 								type="submit"
 								variant="contained"
 								style={{ margin: "10px", width: "40%" }}
+								onClick={alerting}
 							>
 								Submit
 							</Button>

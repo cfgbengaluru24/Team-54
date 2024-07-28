@@ -3,7 +3,7 @@ import React from 'react';
 
 const About = () => {
   return (
-    <div style={{ padding: '2rem', textAlign: 'center' }}>
+    <div style={{ padding: '2rem', textAlign: 'center', position: 'relative' }}>
       <h1>About Page</h1>
       <h1 style={{ maxWidth: '600px', margin: 'auto', lineHeight: '1.6' }}>
         Our Story
@@ -16,7 +16,20 @@ const About = () => {
         <br /><br />
         In the 7th year as well, Aspire and Glee has taken up the challenge to feed every hungry soul in the time of grave crisis, requesting you to be with us. Together, we can spread more smiles. #inittogether
       </p>
-      <img src="https://aspireandglee.com/wp-content/uploads/2021/11/ebartobekhushirjaama_aspireandglee_standee.png" style={{height:"500px", width:"600px",}}></img>
+      <img
+        src="https://aspireandglee.com/wp-content/uploads/2021/11/ebartobekhushirjaama_aspireandglee_standee.png"
+        alt="Aspire and Glee"
+        style={{ 
+          height: "500px", 
+          width: "600px", 
+          objectFit: "cover", 
+          border: "none",
+          display: 'block', // Ensures the image is a block-level element
+          margin: '0 auto', // Centers the image horizontally
+          position: 'relative', // Ensure it is above any potential overlays
+          zIndex: 1, // Above any lower z-index elements
+        }}
+      />
     </div>
   );
 }

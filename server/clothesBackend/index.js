@@ -5,17 +5,28 @@ const dotenv = require('dotenv');
 const bodyParser = require('body-parser');
 
 dotenv.config();
+
 const authRoutes = require('./routes/authRoutes');
 const donationRoutes = require('./routes/donationRoutes');
 const inventoryRoutes = require('./routes/inventoryRoutes');
 const cartRoutes = require('./routes/cartRoutes');
-//const { initializeInventory } = require('./controllers/inventoryController');
+// const { initializeInventory } = require('./controllers/inventoryController');
 
-const app = express();
+const app = express(); // Initialize the app before using it
+
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Routes
+app.use('/api/auth', authRoutes);
+app.use('/api/donate', donationRoutes);
+app.use('/api/inventory', inventoryRoutes);
+app.use('/api/cart', cartRoutes);
 
 // Middleware
 app.use(express.json());
-app.use(cors());
+// app.use(cors());
 app.use(bodyParser.json());  // Parses JSON data in the request body
 
 // Routes
@@ -26,7 +37,7 @@ app.use('/', cartRoutes);
 
 const PORT = process.env.PORT || 5000;
 
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect("mongodb+srv://arshiaguptabt22ele:kGjWDqOkXFKhySYD@cluster0.glzdsy0.mongodb.net/", { useNewUrlParser: true, useUnifiedTopology: true })
 .then(() => {
     console.log('Connected to MongoDB');
   

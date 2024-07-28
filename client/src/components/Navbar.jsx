@@ -26,7 +26,7 @@ const Navbar = () => {
         <h3>Donate Clothes</h3>
       </Link>
       <Link to="/data" style={{ color: "white", textDecoration: "none" }}>
-        <h3>Fetch Data</h3>
+        <h3>Progress Tracker</h3>
       </Link>
       <Link to="/form" style={{ color: "white", textDecoration: "none" }}>
         <h3>Form</h3>

@@ -59,10 +59,12 @@ const DataFetchingComponent = () => {
         {data && (
           <Paper elevation={1} style={{ marginTop: '20px', padding: '10px' }}>
             <Typography variant="h6">Data for ID: {id}</Typography>
-            <pre style={{ whiteSpace: 'pre-wrap', wordWrap: 'break-word' }}><h3>
-              {JSON.stringify(data, null, 2)}</h3>
-              
-            </pre>
+            <Box mt={2}>
+              <Typography><strong>Subject:</strong> {data.subject}</Typography>
+              <Typography><strong>Marks:</strong> {data.marks}</Typography>
+              <Typography><strong>Comments:</strong> {data.comments}</Typography>
+              <Typography><strong>Created At:</strong> {new Date(data.createdAt).toLocaleString()}</Typography>
+            </Box>
           </Paper>
         )}
       </Paper>
