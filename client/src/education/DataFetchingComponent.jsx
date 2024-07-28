@@ -61,6 +61,7 @@ const DataFetchingComponent = () => {
             <Typography variant="h6">Data for ID: {id}</Typography>
             <pre style={{ whiteSpace: 'pre-wrap', wordWrap: 'break-word' }}><h3>
               {JSON.stringify(data, null, 2)}</h3>
+              
             </pre>
           </Paper>
         )}
