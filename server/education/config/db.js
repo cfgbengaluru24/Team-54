@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+console.log("Hey");
 const connectDB = async () => {
   try {
     // console.log(MONGO_EDU_URI);
