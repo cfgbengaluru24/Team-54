@@ -1,10 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const auth = require('../middlewares/authMiddleware');
-const { createDonation, getDonations } = require('../controllers/donationController');
-router.post('/donate', auth, createDonation);
-router.get('/donations', auth, getDonations);
+const donationController = require('../controllers/donationController');
+
+router.post('/api/donate', donationController.addDonation);
+router.get('/donations', donationController.getDonations);
+
 module.exports = router;
-
-
-

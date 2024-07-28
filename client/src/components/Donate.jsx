@@ -1,60 +1,114 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
+import './Donation.css';
 
-axios.defaults.baseURL = import.meta.env.VITE_API_URL;
-
-const Donate = () => {
-  const [category, setCategory] = useState('');
-  const [quantity, setQuantity] = useState('');
-  const [email, setEmail] = useState(''); // Add email state
+const Donation = () => {
+  const [formData, setFormData] = useState({ category: '', quantity: '', email: '' });
+  const [message, setMessage] = useState('');
   const [donations, setDonations] = useState([]);
+  const [donationSuccess, setDonationSuccess] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const token = localStorage.getItem('token');
-      const res = await axios.post('/api/donations/donate', { category, quantity, email }, {
-        headers: { 'x-auth-token': token }
-      });
-      setDonations([...donations, res.data]);
+      const res = await axios.post('/api/donate', formData);
+      setMessage(res.data.message);
+      setDonationSuccess(true);
+      fetchDonations();
+      setShowModal(true); // Show the modal on success
     } catch (err) {
       console.error(err.response.data);
-      alert(err.response.data.msg); // Show alert if inventory is full
+      setMessage(err.response.data.error || 'Failed to add donation');
+      setDonationSuccess(false);
     }
   };
 
-  useEffect(() => {
-    const fetchDonations = async () => {
-      try {
-        const token = localStorage.getItem('token');
-        const res = await axios.get('/api/donations/donations', {
-          headers: { 'x-auth-token': token }
-        });
-        setDonations(res.data);
-      } catch (err) {
-        console.error(err.response.data);
-      }
-    };
-    fetchDonations();
-  }, []);
+  const fetchDonations = async () => {
+    try {
+      const res = await axios.get('/donations');
+      setDonations(res.data);
+    } catch (err) {
+      console.error(err.response.data);
+    }
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
 
   return (
-    <div>
+    <div className="container">
       <h2>Donate Clothes</h2>
       <form onSubmit={handleSubmit}>
-        <input type="text" placeholder="Category" value={category} onChange={(e) => setCategory(e.target.value)} />
-        <input type="number" placeholder="Quantity" value={quantity} onChange={(e) => setQuantity(e.target.value)} />
-        <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} /> {/* Add email input */}
+        <label>
+          Category:
+          <input
+            type="text"
+            name="category"
+            value={formData.category}
+            onChange={handleChange}
+            required
+          />
+        </label>
+        <br />
+        <label>
+          Quantity:
+          <input
+            type="number"
+            name="quantity"
+            value={formData.quantity}
+            onChange={handleChange}
+            required
+          />
+        </label>
+        <br />
+        <label>
+          Email:
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+            className="email-input"
+          />
+        </label>
+        <br />
         <button type="submit">Donate</button>
       </form>
-      <h3>Your Donations</h3>
-      <ul>
-        {donations.map(donation => (
-          <li key={donation._id}>{donation.category}: {donation.quantity}</li>
-        ))}
-      </ul>
+      {message && <p className="message">{message}</p>}
+      {donationSuccess && (
+        <div className="donations">
+          <h2>Recent Donations</h2>
+          <ul>
+            {donations.map((donation) => (
+              <li key={donation._id}>
+                <strong>Category:</strong> {donation.category} <br />
+                <strong>Quantity:</strong> {donation.quantity} <br />
+                <strong>Email:</strong> {donation.email} <br />
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+      {showModal && (
+        <div className="modal">
+          <div className="modal-content">
+            <span className="close" onClick={closeModal}>&times;</span>
+            <p>Donation added successfully!</p>
+            <p>Please drop off the clothes at X Location!</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
-export default Donate;
+export default Donation;
+

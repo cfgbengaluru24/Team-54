@@ -48,7 +48,14 @@ const Cart = () => {
   };
 
   return (
-    <div className="cart">
+    <div className="cart"  style={{
+			display: "flex",
+			alignItems: "center",
+			justifyContent: "center",
+			background: "#CFFCF8",
+			height: "100vh",
+			margin: 0,
+		  }}>
       <h2>Cart</h2>
       {cartItems.map(item => (
         <CartItem

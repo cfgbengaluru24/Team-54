@@ -18,7 +18,7 @@ exports.initializeInventory = async () => {
     return { message: 'Inventory initialized successfully' };
   } catch (error) {
     console.error('Error initializing inventory:', error);
-    throw new Error('Server error'); // Throw error to be caught by route handler
+    throw new Error('Server error');
   }
 };
 

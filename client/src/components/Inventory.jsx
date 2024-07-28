@@ -9,10 +9,7 @@ const Inventory = () => {
   useEffect(() => {
     const fetchInventory = async () => {
       try {
-        const token = localStorage.getItem('token');
-        const res = await axios.get('/api/inventory', {
-          headers: { 'x-auth-token': token }
-        });
+        const res = await axios.get('/donation');
         setInventory(res.data);
       } catch (err) {
         console.error(err.response.data);
@@ -30,7 +27,6 @@ const Inventory = () => {
           <li key={item._id}>
             <strong>Category:</strong> {item.category} <br />
             <strong>Quantity:</strong> {item.quantity} <br />
-            <strong>Total Capacity:</strong> {item.totalCapacity}
           </li>
         ))}
       </ul>

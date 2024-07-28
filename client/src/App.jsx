@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Register from './components/Register';
 import Login from './components/Login';
-import Donate from './components/Donate';
+import Donation from './components/Donate';
 import Inventory from './components/Inventory';  // Import the Inventory component
 import Cart from './components/Cart';
 
@@ -21,9 +21,10 @@ const App = () => {
       <Routes>
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/donate" element={<Donate />} />
+        <Route path="/donate" element={<Donation />} />
         <Route path="/inventory" element={<Inventory />} /> {/* Add route for inventory */}
         <Route path="/cart" element={<Cart />} />
+        <Route path="/email" element={<SendEmailButton/>}/>
       </Routes>
       </div>
     </Router>

@@ -1,8 +1,6 @@
 const express = require('express');
-const { initializeInventory } = require('../controllers/inventoryController'); // Ensure correct path
+//const { initializeInventory } = require('../controllers/inventoryController'); // Ensure correct path
 const Inventory = require('../models/inventoryModel');
-
-
 
 const router = express.Router();
 const inventoryController = require('../controllers/inventoryController');
@@ -25,7 +23,6 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.post('/update', inventoryController.updateQuantity);
+
 module.exports = router;
-
-
-
