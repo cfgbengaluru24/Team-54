@@ -14,6 +14,10 @@ function Form() {
 		axios.get("/api").then((res) => setData(res.data.message));
 	}, []);
 */
+function redirectToExternal() {
+    window.location.href = 'http://localhost:3000/';
+}
+
 
 	const { register, handleSubmit } = useForm();
 
@@ -26,6 +30,7 @@ function Form() {
 				console.error('There was an error!', error);
 			});
 	};
+
 
     const handleSpeak = (text) => {
         const utterance = new SpeechSynthesisUtterance(text);
@@ -119,6 +124,13 @@ function Form() {
 								style={{ marginTop: "10px", width: "40%" }}
 							>
 								Submit
+							</Button>
+							<Button
+							onClick={redirectToExternal}
+								variant="contained"
+								style={{ marginTop: "10px", width: "40%" }}
+							>
+								Speech
 							</Button>
 						</div>
 					</FormControl>
