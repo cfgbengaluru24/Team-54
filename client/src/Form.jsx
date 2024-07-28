@@ -22,7 +22,7 @@ function redirectToExternal() {
 	const { register, handleSubmit } = useForm();
 
 	const onsub = (data) => {
-		axios.post("http://localhost:3001/edu/data", data)
+		axios.post("http://localhost:3000/edu/data", data)
 			.then(response => {
 				console.log(response.data);
 			})
@@ -121,14 +121,14 @@ function redirectToExternal() {
 							<Button
 								type="submit"
 								variant="contained"
-								style={{ marginTop: "10px", width: "40%" }}
+								style={{ margin: "10px", width: "40%" }}
 							>
 								Submit
 							</Button>
 							<Button
 							onClick={redirectToExternal}
 								variant="contained"
-								style={{ marginTop: "10px", width: "40%" }}
+								style={{ margin: "10px", width: "40%" }}
 							>
 								Speech
 							</Button>
